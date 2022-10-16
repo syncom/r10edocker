@@ -21,14 +21,16 @@ There are some pleasant side-effects
 - The resulting Docker container is minimum, in that it contains only the
   application(s), but does not include an OS shell, a package manager, etc.
 
-## Constraints
+## FAQs
+
+### What are the constraints
 
 Currently, `r10edocker` only
 
 - works for "pure" Go projects, i.e., those that do not use `cgo`
 - produces `x86_64` Docker images
 
-## What if my Go application is not locally reproducible
+### What if my Go application is not locally reproducible
 
 In general, Go makes it easy to get reproducible statically linked executables.
 If your Go application is not reproducible, make sure you
@@ -42,18 +44,11 @@ If your Go application is not reproducible, make sure you
 
 ## How to Use
 
-### Build `r10edocker`
-
-Under this repo's directory root
+### install `r10edocker`
 
 ```bash
-make build
+go install github.com/syncom/r10edocker@latest
 ```
-
-The compiled binary is `./build/r10edocker-${OS}-${ARCH}`. For example, on
-Linux/x64, this would be `./build/r10edocker-linux-amd64`; on MacOS/M1, this
-would be `./build/r10edocker-darwin-arm64`. We will refer to the `r10edocker`
-binary as `/path/to/r10edocker-exe` in the rest of the document.
 
 ### Set up your Go project for reproducible Docker builds
 
@@ -99,7 +94,7 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory.
 - "build_cmd" is a one-line command to build your Go application(s). You may use
   a shell script file for it
 - "artifacts" contains information about the source and destination path
-  information for the Go executables to get into the container image
+  information for the Go executable(s) to get into the container image
   - "src" shall be a *relative path* of the executable (built with "build_cmd"
     on a build host) with respect to the project's directory root
   - "dest" shall be an *absolute path* of the executable in the final Docker
@@ -114,8 +109,8 @@ Make sure you have the Docker daemon running and `sha256sum` (provided by
 `coreutils`) in your PATH. Under your Go project's directory root, run
 
 ```bash
-$ /path/to/r10edocker-exe -c config.json
-2022/10/13 17:15:45 R10e build scripts created in 'r10e-docker'
+$ r10edocker -c config.json
+2022/10/15 20:08:33 R10e build scripts created in 'r10e-docker'
 ```
 
 The build scripts are created in subdirectory `r10e-docker` using information in
