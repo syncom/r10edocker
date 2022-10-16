@@ -1,0 +1,88 @@
+name: "Sanity checks"
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+env:
+  PROJECT_NAME: go-r10e-docker
+jobs:
+  sanity:
+    name: "build and test"
+    runs-on: ${{ matrix.os }}
+    strategy:
+      matrix:
+        go-version: [1.19.x]
+        os: [ubuntu-latest]
+    steps:
+      - name: "install golang"
+        uses: actions/setup-go@v2
+        with:
+          go-version: ${{ matrix.go-version }}
+      - name: "checkout code"
+        uses: actions/checkout@v3
+      - name: "build r10edocker"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          make build
+          build/r10edocker-linux-amd64 --version
+      - name: "generate r10e scripts using r10edocker"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          rm -rf r10e-docker/
+          build/r10edocker-linux-amd64 -c config.json
+      - name: "r10e-build r10edocker"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          bash r10e-docker/build_container.sh
+      - name: "save SUM1 for reproducibility cross-check"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          # sha256sum of sha256sums of sorted files in r10e-docker/
+          echo "SUM1=$(for f in $(find r10e-docker/ -type f | sort); \
+            do sha256sum "$f"; done \
+            | sha256sum | cut -f1 -d' ')" >> $GITHUB_ENV
+      - name: "load and run container"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          docker load -i "r10e-docker/out/$PROJECT_NAME-latest.tar.gz"
+          docker run --rm -i --entrypoint "/app/r10edocker-linux-amd64" "$PROJECT_NAME:latest" --version
+      - name: "copy r10e executable from container"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          ./scripts/container_cp.sh "$PROJECT_NAME:latest" "/app/r10edocker-linux-amd64" "build/r10e-r10edocker"
+          # simple test
+          build/r10e-r10edocker --version
+      - name: "generate r10e script using r10e execubtable"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          rm -rf r10e-docker/
+          build/r10e-r10edocker -c config.json
+      - name: "r10e-build r10edocker, second time"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          bash r10e-docker/build_container.sh
+      - name: "save SUM2 for reproducibility cross-check"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          # sha256sum of sha256sums of sorted files in r10e-docker/
+          echo "SUM2=$(for f in $(find r10e-docker/ -type f | sort); \
+            do sha256sum "$f"; done \
+            | sha256sum | cut -f1 -d' ')" >> $GITHUB_ENV
+      - name: "r10e cross-check"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          [ "$SUM1" = "$SUM2" ] || { echo "hash mismatch. r10e cross-check failed"; exit 1; }
+          echo "r10e cross-check succeeded"

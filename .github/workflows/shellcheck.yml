@@ -1,0 +1,54 @@
+# Shellcheck: Opinionated shell script analysis
+name: "Shellcheck"
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  shellcheck:
+    name: "shellcheck"
+    strategy:
+      fail-fast: false
+      # Run on linux and macos
+      matrix:
+        os: [ubuntu-latest, macos-latest]
+    runs-on: ${{ matrix.os }}
+    steps:
+      - name: "Checkout repository"
+        uses: actions/checkout@v3
+      - if: ${{ matrix.os == 'ubuntu-latest' }}
+        name: Install shellcheck on Ubuntu
+        run: |
+          sudo apt update
+          sudo apt install shellcheck -y
+          shellcheck --version
+      - if: ${{ matrix.os == 'macos-latest' }}
+        name: "Install shellcheck on macos"
+        run: |
+          brew install shellcheck
+          shellcheck --version
+      - name: "Run shellcheck on static files"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}/
+          for f in $(find scripts/ -type f); do
+            if file "$f" | grep "shell script" &>/dev/null; then
+              shellcheck "$f"
+            fi
+          done
+      - name: "Run shellcheck on dynamically generated files"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}/
+          make build
+          # Use same executable name for all runners
+          cp build/r10edocker-* build/r10edocker
+          build/r10edocker -c config.json
+          for f in $(find r10e-docker/ -type f); do
+            if file "$f" | grep "shell script" &>/dev/null; then
+              shellcheck "$f"
+            fi
+          done

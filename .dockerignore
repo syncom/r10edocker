@@ -1,0 +1,6 @@
+r10e-docker/out/
+build/
+r10e-build/
+.github/
+.git/
+CODEOWNERS

@@ -1,0 +1,4 @@
+*.bak
+build/
+r10e-docker/out/
+.DS_Store
