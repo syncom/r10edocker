@@ -19,7 +19,7 @@ There are some pleasant side-effects
   applications. We provide a utility [container_cp.sh](scripts/container_cp.sh)
   to extract a file from a container image, in case it helps you.
 - The resulting Docker container is minimum, in that it contains only the
-  application(s), but does not include an OS shell, a package manager, etc.
+  application(s), but does not include an OS shell, a package manager, etc. Minimum containers minimizes attack surface.
 
 ## FAQs
 
@@ -86,7 +86,15 @@ Here's an example: [config.json](./config.json)
 }
 ```
 
-Fields "project_name", "build_cmd", and "artifacts" are mandatory.
+Fields "project_name", "build_cmd", and "artifacts" are mandatory. Field
+"maintainers" is optional.
+
+| Name         | Value Type | Can be null or empty |
+| :---         | :---       | :---:                |
+| project_name | string     | false                |
+| build_cmd    | string     | false                |
+| maintainers  | array of strings | true           |
+| artifacts    | array of objects | false          |
 
 - "project_name" is a name to identify your project. Your reproducible container
   image will be named after it. Please make sure there's no whitespace
@@ -99,9 +107,8 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory.
     on a build host) with respect to the project's directory root
   - "dest" shall be an *absolute path* of the executable in the final Docker
     container image
-
-Field "maintainers" is optional. It usually contains a list of project
-maintainer names/aliases/GitHub handles.
+- "maintainer" contains a list of project maintainer
+names/aliases/GitHub handles
 
 #### Generate r10e build scripts, and build
 
