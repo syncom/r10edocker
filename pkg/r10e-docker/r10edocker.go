@@ -50,6 +50,20 @@ func ReadConfigFile(configFilePath string) (config Config, error error) {
 		return config, errors.Wrap(err, "could not unmarshal JSON config")
 	}
 
+	// sanity checks
+	if config.ProjectName == "" {
+		return config, errors.New("project_name must not be empty or null")
+	}
+
+	if config.BuildCmd == "" {
+		return config, errors.New("build_cmd must not be empty or null")
+	}
+
+	if len(config.Artifacts) == 0 {
+		return config, errors.New("artifacts must not be empty or null")
+	}
+
+	// TODO: stricter checks on objects in artifacts
 	return config, nil
 }
 
