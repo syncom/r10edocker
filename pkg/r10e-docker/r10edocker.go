@@ -3,6 +3,7 @@ package r10edocker
 import (
 	"embed"
 	"encoding/json"
+	"fmt"
 	"io/fs"
 	"log"
 	"os"
@@ -55,7 +56,12 @@ func ReadConfigFile(configFilePath string) (config Config, error error) {
 		return config, errors.New("project_name must not be empty or null")
 	}
 
-	if config.BuildCmd == "" {
+	if len(config.ProjectName) != len(strings.TrimSpace(config.ProjectName)) ||
+		len(strings.Fields(config.ProjectName)) > 1 {
+		return config, errors.New("project_name must not contain whitespace")
+	}
+
+	if strings.TrimSpace(config.BuildCmd) == "" {
 		return config, errors.New("build_cmd must not be empty or null")
 	}
 
@@ -63,7 +69,13 @@ func ReadConfigFile(configFilePath string) (config Config, error error) {
 		return config, errors.New("artifacts must not be empty or null")
 	}
 
-	// TODO: stricter checks on objects in artifacts
+	for _, a := range config.Artifacts {
+		if strings.TrimSpace(a.Source) == "" ||
+			strings.TrimSpace(a.Destination) == "" {
+			return config, fmt.Errorf(
+				"neither src nor dest of artifact shall be empty or null; got %#v", a)
+		}
+	}
 	return config, nil
 }
 
