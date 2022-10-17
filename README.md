@@ -19,7 +19,8 @@ There are some pleasant side-effects
   applications. We provide a utility [container_cp.sh](scripts/container_cp.sh)
   to extract a file from a container image, in case it helps you.
 - The resulting Docker container is minimum, in that it contains only the
-  application(s), but does not include an OS shell, a package manager, etc. Minimum containers minimizes attack surface.
+  application(s), but does not include an OS shell, a package manager, etc.
+  Minimum containers minimize attack surface.
 
 ## FAQs
 
