@@ -15,16 +15,19 @@ import (
 )
 
 type Config struct {
-	ProjectName string     `json:"project_name"`
-	BuildCmd    string     `json:"build_cmd"`
-	Maintainers []string   `json:"maintainers"`
-	Artifacts   []Artifact `json:"artifacts"`
+	ProjectName  string          `json:"project_name"`
+	BuildCmd     string          `json:"build_cmd"`
+	Maintainers  []string        `json:"maintainers"`
+	Artifacts    []Artifact      `json:"artifacts"`
+	ExternalData []ExternalDatum `json:"extern_data"`
 }
 
 type Artifact struct {
 	Source      string `json:"src"`
 	Destination string `json:"dest"`
 }
+
+type ExternalDatum = Artifact
 
 var (
 	//go:embed files
@@ -76,6 +79,15 @@ func ReadConfigFile(configFilePath string) (config Config, error error) {
 				"neither src nor dest of artifact shall be empty or null; got %#v", a)
 		}
 	}
+
+	for _, d := range config.ExternalData {
+		if strings.TrimSpace(d.Source) == "" ||
+			strings.TrimSpace(d.Destination) == "" {
+			return config, fmt.Errorf(
+				"neither src nor dest of extern_datum shall be empty or null; got %#v", d)
+		}
+	}
+
 	return config, nil
 }
 

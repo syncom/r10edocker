@@ -39,7 +39,7 @@ do_extract() {
   local sum
 
   container_id=$(docker create "$image" --entrypoint="null")
-  docker cp "$container_id:$from" "$to"
+  docker cp -L "$container_id:$from" "$to"
   docker rm "$container_id" >/dev/null
 
   echo "Successfully copied $from in container $image to $to"

@@ -19,5 +19,11 @@
       "src": "build/r10edocker-darwin-arm64",
       "dest": "/app/r10edocker-darwin-arm64"
     }
+  ],
+  "extern_data": [
+    {
+      "src": "LICENSE",
+      "dest": "/LICENSE"
+    }
   ]
 }
