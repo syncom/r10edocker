@@ -29,7 +29,7 @@ stdenv.mkDerivation rec {
     echo "{{.ProjectName}}: $out"
     mkdir -p $out
     cp --parents {{range $index, $x := .Artifacts}} ./{{$x.Destination}}{{end}} $out/
-    cp -r --parents {{range $index, $x := .ExternalData}} ./{{$x.Destination}}{{end}} $out/
+    {{if .ExternalData}}cp -r --parents {{range $index, $x := .ExternalData}} ./{{$x.Destination}}{{end}} $out/{{end}}
     '';
 
   meta = with lib; {
