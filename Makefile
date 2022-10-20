@@ -7,6 +7,7 @@ GOARCH ?= $(shell go version | awk '{print $$NF}' | cut -d/ -f2)
 bin := $(build_dir)/r10edocker-$(GOOS)-$(GOARCH)
 # project_name must match that in config.json
 project_name := go-r10e-docker
+config_file := $(mkfile_dir)/config.json
 
 .PHONY: all build r10e-build clean
 
@@ -18,7 +19,7 @@ build:
 
 r10e-build: build
 	cp $(bin) $(build_dir)/r10edocker
-	$(build_dir)/r10edocker -c config.json
+	$(build_dir)/r10edocker -c $(config_file)
 	bash $(mkfile_dir)/r10e-docker/build_container.sh
 	docker load -i $(mkfile_dir)/r10e-docker/out/$(project_name)-latest.tar.gz
 	mkdir -p $(r10e_build_dir)
