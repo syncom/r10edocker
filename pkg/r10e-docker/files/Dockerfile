@@ -31,11 +31,13 @@ COPY . "/build/${PROJECT_NAME}"
 
 RUN cd "/build/${PROJECT_NAME}" && \
     {{range $index, $x := .Artifacts}}mkdir -p /archive/$(dirname {{$x.Destination}}) && \
+    {{end}}{{range $index, $x := .ExternalData}}mkdir -p /archive/$(dirname {{$x.Destination}}) && \
     {{end}}nix-shell -p go_1_19 gnumake \
       --run "go version && \
              {{.BuildCmd}}" && \
     sha256sum {{range $index, $x := .Artifacts}}/build/${PROJECT_NAME}/{{$x.Source}} {{end}} && \
     {{range $index, $x := .Artifacts}}cp /build/${PROJECT_NAME}/{{$x.Source}} /archive/{{$x.Destination}} && \
+    {{end}}{{range $index, $x := .ExternalData}}cp -r /build/${PROJECT_NAME}/{{$x.Source}} /archive/{{$x.Destination}} && \
     {{end}}cd /archive && \
     tar cvz --sort=name --mtime="2000-01-02 00:00:00" -f "${PROJECT_NAME}.tar.gz" *
 

@@ -83,12 +83,18 @@ Here's an example: [config.json](./config.json)
       "src": "build/r10edocker-darwin-arm64",
       "dest": "/app/r10edocker-darwin-arm64"
     }
+  ],
+  "extern_data": [
+    {
+      "src": "LICENSE",
+      "dest": "/LICENSE"
+    }
   ]
 }
 ```
 
-Fields "project_name", "build_cmd", and "artifacts" are mandatory. Field
-"maintainers" is optional.
+Fields "project_name", "build_cmd", and "artifacts" are mandatory. Fields
+"maintainers" and "extern_data" are optional.
 
 | Name         | Value Type | Can be null or empty |
 | :---         | :---       | :---:                |
@@ -96,6 +102,7 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory. Field
 | build_cmd    | string     | false                |
 | maintainers  | array of strings | true           |
 | artifacts    | array of objects | false          |
+| extern_data  | array of objects | true           |
 
 - "project_name" is a name to identify your project. Your reproducible container
   image will be named after it. Please make sure there's no whitespace
@@ -104,12 +111,17 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory. Field
   a shell script file for it
 - "artifacts" contains information about the source and destination path
   information for the Go executable(s) to get into the container image
-  - "src" shall be a *relative path* of the executable (built with "build_cmd"
-    on a build host) with respect to the project's directory root
-  - "dest" shall be an *absolute path* of the executable in the final Docker
-    container image
+  - "src" shall be a *relative path* of the executable file (built with
+    "build_cmd" on a build host) with respect to the project's directory root
+  - "dest" shall be an *absolute path* of the executable file in the final
+    Docker container image
 - "maintainer" contains a list of project maintainer
-names/aliases/GitHub handles
+  names/aliases/GitHub handles
+- "extern_data" contains information about the source and destination path
+  information for data external to the Go executable(s) to get into the
+  container. Unlike in "artifacts", the external data path can be either a file
+  or a directory. However, the source and destination paths for the same
+  external datum must be of the same type (file or directory) when instantiated.
 
 #### Generate r10e build scripts, and build
 

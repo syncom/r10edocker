@@ -28,8 +28,9 @@ stdenv.mkDerivation rec {
   installPhase = ''
     echo "{{.ProjectName}}: $out"
     mkdir -p $out
-    cp --parents {{range $index, $x := .Artifacts}}./{{$x.Destination}} {{end}} $out/
-  '';
+    cp --parents {{range $index, $x := .Artifacts}} ./{{$x.Destination}}{{end}} $out/
+    cp -r --parents {{range $index, $x := .ExternalData}} ./{{$x.Destination}}{{end}} $out/
+    '';
 
   meta = with lib; {
     description = "{{.ProjectName}} 1.0.0";
