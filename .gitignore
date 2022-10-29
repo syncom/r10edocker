@@ -1,4 +1,6 @@
 *.bak
-build/
-r10e-docker/out/
 .DS_Store
+# Don't remove below. Necessary for proper versioning in CI release
+build/
+r10e-docker/
+!pkg/r10e-docker/
