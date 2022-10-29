@@ -7,15 +7,13 @@ import (
 
 	"github.com/spf13/cobra"
 	r10edocker "github.com/syncom/r10edocker/pkg/r10e-docker"
-	"github.com/syncom/r10edocker/version"
 )
 
 var configFile string
 
 var rootCmd = &cobra.Command{
-	Use:     "r10edocker",
-	Version: version.Version,
-	Short:   "r10edocer - make minimum, reproducible Docker container for Go application",
+	Use:   "r10edocker",
+	Short: "r10edocer - make minimum, reproducible Docker container for Go application",
 	Long: `r10edocker creates a framework for making reproducible Docker container images
 
 Configure r10edocker in JSON.
@@ -34,7 +32,8 @@ The resulting Docker container is minimum, in that it contains only the applicat
 	},
 }
 
-func Execute() {
+func Execute(version string) {
+	rootCmd.Version = version
 	if err := rootCmd.Execute(); err != nil {
 		log.Fatalf("CLI error:, '%s'", err)
 	}

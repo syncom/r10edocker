@@ -36,7 +36,7 @@ jobs:
           cd ${{ github.workspace }}
           APP_VERSION="$(r10e-build/r10edocker-linux-amd64 --version | rev | cut -f1 -d' ' | rev)"
           if [ "$APP_VERSION" != "$RELEASE_VERSION" ]; then
-            echo "version (${APP_VERSION}) in version/version.go and tagged version (${RELEASE_VERSION}) mismatch"
+            echo "This is not supposed to happen. There must be a versioning bug."
             exit 1
           fi
 
