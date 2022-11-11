@@ -28,7 +28,7 @@ There are some pleasant side-effects
 
 Currently, `r10edocker` only
 
-- works for "pure" Go projects, i.e., those that do not use `cgo`
+- works for "pure" Go projects, i.e., those that do not use [cgo](https://pkg.go.dev/cmd/cgo)
 - produces `x86_64` Docker images
 
 ### What if my Go application is not locally reproducible
