@@ -1,0 +1,29 @@
+name: "Reproducible (r10e) r10edocker binaries canary builds"
+on:
+  push:
+    branches:
+      - 'main'
+jobs:
+  release-r10e-binaries:
+    name: "Release r10e r10edocker"
+    runs-on: ubuntu-latest
+    steps:
+      - name: "Checkout code"
+        uses: actions/checkout@v3
+
+      - name: "Build r10e apps at HEAD of default branch"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          make r10e-build
+
+      - name: "Release versioned"
+        # v1.11.1
+        uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac
+        with:
+          tag: "canary"
+          name: "Canary"
+          allowUpdates: true
+          generateReleaseNotes: false
+          artifacts: "r10e-build/*"
+          token: ${{ secrets.GITHUB_TOKEN }}
