@@ -10,6 +10,9 @@ jobs:
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v3
+        with:
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
 
       - name: "Build r10e apps at HEAD of default branch"
         run: |
