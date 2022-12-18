@@ -10,12 +10,17 @@ jobs:
     steps:
       - name: "Checkout code"
         uses: actions/checkout@v3
+        with:
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
 
       - name: "Build r10e apps at HEAD of default branch"
         run: |
           set -euxo pipefail
           cd ${{ github.workspace }}
           make r10e-build
+          # for debugging
+          ./r10e-build/r10edocker-linux-amd64 --version
 
       - name: "Release versioned"
         # v1.11.1

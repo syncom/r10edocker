@@ -23,6 +23,9 @@ jobs:
           go-version: ${{ matrix.go-version }}
       - name: "checkout code"
         uses: actions/checkout@v3
+        with:
+          # Fetch all history for all tags and branches
+          fetch-depth: 0
       - name: "build r10edocker"
         run: |
           set -euxo pipefail
