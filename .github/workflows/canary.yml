@@ -19,6 +19,8 @@ jobs:
           set -euxo pipefail
           cd ${{ github.workspace }}
           make r10e-build
+          # for debugging
+          ./r10e-build/r10edocker-linux-amd64 --version
 
       - name: "Release versioned"
         # v1.11.1
