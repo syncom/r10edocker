@@ -4,8 +4,8 @@ on:
     branches:
       - 'main'
 jobs:
-  release-r10e-binaries:
-    name: "Release r10e r10edocker"
+  release-r10e-binaries-canary:
+    name: "Release r10e r10edocker (canary)"
     runs-on: ubuntu-latest
     steps:
       - name: "Checkout code"
@@ -22,7 +22,7 @@ jobs:
           # for debugging
           ./r10e-build/r10edocker-linux-amd64 --version
 
-      - name: "Release versioned"
+      - name: "Release canary"
         # v1.11.1
         uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac
         with:
