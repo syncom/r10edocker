@@ -6,7 +6,7 @@ set -euxo pipefail
 
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 readonly SCRIPT_DIR
-PROJECT_DIR="${SCRIPT_DIR}/.."
+PROJECT_DIR="$(realpath "${SCRIPT_DIR}/..")"
 readonly PROJECT_DIR
 PROJECT_NAME="go-r10e-docker"
 readonly PROJECT_NAME
