@@ -5,7 +5,8 @@ set -euxo pipefail
 SCRIPT_DIR="$(cd "$( dirname "${BASH_SOURCE[0]}" )" &> /dev/null && pwd )"
 OUT_DIR="${SCRIPT_DIR}/out"
 OUT_TARBALL_NAME="{{.ProjectName}}-latest.tar.gz"
-REVISION=$(git --work-tree="${SCRIPT_DIR}"/../ --git-dir="${SCRIPT_DIR}"/../.git \
+REVISION=$(git --work-tree="$(realpath "${SCRIPT_DIR}"/../)" \
+  --git-dir="$(realpath "${SCRIPT_DIR}"/../.git)" \
   rev-parse HEAD)
 BUILDER_TAG_NAME="{{.ProjectName}}-builder:$REVISION"
 
