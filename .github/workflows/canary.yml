@@ -3,6 +3,8 @@ on:
   push:
     branches:
       - 'main'
+      # For testing. TODO: remove
+      - 'syncom/publish-to-ghcr'
 jobs:
   release-r10e-binaries-canary:
     name: "Release r10e r10edocker (canary)"
@@ -22,7 +24,7 @@ jobs:
           # for debugging
           ./r10e-build/r10edocker-linux-amd64 --version
 
-      - name: "Release canary"
+      - name: "Release canary binaries"
         # v1.11.1
         uses: ncipollo/release-action@4c75f0f2e4ae5f3c807cf0904605408e319dcaac
         with:
@@ -32,3 +34,17 @@ jobs:
           generateReleaseNotes: false
           artifacts: "r10e-build/*"
           token: ${{ secrets.GITHUB_TOKEN }}
+      
+      # Publish container image to GitHub Container Registry (GHCR)
+      - name: "Publish to GHCR"
+        run: |
+          set -euxo pipefail
+          cd ${{ github.workspace }}
+          GHCR_URI="ghcr.io"
+          SOURCE_IMAGE_TAG="go-r10e-docker:latest"
+          TARGET_IMAGE_TAG="go-r10e-docker:${GITHUB_SHA}"
+          GHCR_IMAGE_URI="${GHCR_URI}/${{ github.repository_owner }}/${TARGET_IMAGE_TAG}"
+          echo "${{ secrets.GITHUB_TOKEN }}" | docker login ghcr.io -u ${{ github.actor }} --password-stdin
+          docker load --input "r10e-docker/out/go-r10e-docker-latest.tar.gz"
+          docker tag "${SOURCE_IMAGE_TAG}" "${GHCR_IMAGE_URI}"
+          docker push "${GHCR_IMAGE_URI}"
