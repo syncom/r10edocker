@@ -3,8 +3,6 @@ on:
   push:
     branches:
       - 'main'
-      # For testing. TODO: remove
-      - 'syncom/publish-to-ghcr'
 jobs:
   release-r10e-binaries-canary:
     name: "Release r10e r10edocker (canary)"
