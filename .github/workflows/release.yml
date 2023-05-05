@@ -34,7 +34,9 @@ jobs:
         run: |
           set -euxo pipefail
           cd ${{ github.workspace }}
-          APP_VERSION="$(r10e-build/r10edocker-linux-amd64 --version | rev | cut -f1 -d' ' | rev)"
+          gunzip -c ./r10e-build/r10edocker-linux-amd64.gz >r10edocker.tmp
+          chmod +x r10edocker.tmp
+          APP_VERSION="$(./r10edocker.tmp --version | rev | cut -f1 -d' ' | rev)"
           if [ "$APP_VERSION" != "v$RELEASE_VERSION" ]; then
             echo "This is not supposed to happen. There must be a versioning bug."
             exit 1
