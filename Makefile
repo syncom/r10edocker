@@ -33,6 +33,7 @@ r10e-build: build
 	$(mkfile_dir)/scripts/container_cp.sh "$(project_name):latest" \
 	  "/app/r10edocker-darwin-arm64" "$(r10e_build_dir)/r10edocker-darwin-arm64"
 	cd $(r10e_build_dir) && sha256sum r10edocker-* | sort -k2 > sha256sums.r10e.txt
+	gzip -9 $(r10e_build_dir)/r10edocker-*
 
 clean:
 	rm -rf $(build_dir)

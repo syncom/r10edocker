@@ -20,7 +20,9 @@ jobs:
           cd ${{ github.workspace }}
           make r10e-build
           # for debugging
-          ./r10e-build/r10edocker-linux-amd64 --version
+          gunzip -c ./r10e-build/r10edocker-linux-amd64.gz >r10edocker.tmp
+          chmod +x r10edocker.tmp
+          ./r10edocker.tmp --version
 
       - name: "Release canary binaries"
         # v1.11.1
