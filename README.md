@@ -1,4 +1,4 @@
-# r10edocker: Reproducible Docker Container for Go Application
+# r10edocker: Reproducible Docker Container for Go Applications
 
 [![sanity checks](https://github.com/syncom/r10edocker/actions/workflows/sanity.yml/badge.svg)](https://github.com/syncom/r10edocker/actions/workflows/sanity.yml)
 
