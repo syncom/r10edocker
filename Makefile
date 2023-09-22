@@ -4,7 +4,6 @@ build_dir := $(mkfile_dir)/build
 r10e_build_dir := $(mkfile_dir)/r10e-build
 GOOS ?= $(shell go version | awk '{print $$NF}' | cut -d/ -f1)
 GOARCH ?= $(shell go version | awk '{print $$NF}' | cut -d/ -f2)
-VERSION ?= $(shell git describe --tags --dirty  --always)
 bin := $(build_dir)/r10edocker-$(GOOS)-$(GOARCH)
 # project_name must match that in config.json
 project_name := go-r10e-docker
@@ -16,7 +15,11 @@ all: build
 
 build:
 	mkdir -p $(build_dir)
-	CGO_ENABLED=0 go build -trimpath -ldflags "-X main.version=$(VERSION)" -o $(bin) $(mkfile_dir)
+ifndef VERSION
+	CGO_ENABLED=0 go build -trimpath -o $(bin) $(mkfile_dir)
+else
+	CGO_ENABLED=0 go build -trimpath -ldflags "-X main.ver=$(VERSION)" -o $(bin) $(mkfile_dir)
+endif
 
 r10e-build: build
 	cp $(bin) $(build_dir)/r10edocker
