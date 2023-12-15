@@ -6,8 +6,8 @@ FROM nixos/nix:2.9.0@sha256:13b257cd42db29dc851f9818ea1bc2f9c7128c51fdf000971fa6
 #########################################################
 ENV PROJECT_NAME={{.ProjectName}}
 WORKDIR "/build/${PROJECT_NAME}"
-# nixpkgs 20231008. This version has go 1.21.1
-ENV NIXPKGS_COMMIT_SHA="9957cd48326fe8dbd52fdc50dd2502307f188b0d"
+# nixpkgs 23.11. This version has go 1.21.4
+ENV NIXPKGS_COMMIT_SHA="057f9aecfb71c4437d2b27d3323df7f93c010b7e"
 
 # Apple M1 workaround
 COPY r10e-docker/nix.conf "/build/${PROJECT_NAME}/nix.conf"
