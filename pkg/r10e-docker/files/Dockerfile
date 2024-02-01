@@ -1,5 +1,5 @@
 # The following information is from https://hub.docker.com/r/nixos/nix/tags
-FROM nixos/nix:2.9.0@sha256:13b257cd42db29dc851f9818ea1bc2f9c7128c51fdf000971fa6058c66fbe4b6 as image_builder
+FROM nixos/nix:2.20.1@sha256:bbd436fac4b50712fb065c3cb1d74702aa9d731cc6cc702dbba20a9ccb2d8769 as image_builder
 
 #########################################################
 # Step 1: Prepare nixpkgs for reproducible (r10e) builds
