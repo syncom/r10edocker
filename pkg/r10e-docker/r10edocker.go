@@ -15,11 +15,12 @@ import (
 )
 
 type Config struct {
-	ProjectName  string          `json:"project_name"`
-	BuildCmd     string          `json:"build_cmd"`
-	Maintainers  []string        `json:"maintainers"`
-	Artifacts    []Artifact      `json:"artifacts"`
-	ExternalData []ExternalDatum `json:"extern_data"`
+	ProjectName     string          `json:"project_name"`
+	BuildCmd        string          `json:"build_cmd"`
+	Maintainers     []string        `json:"maintainers"`
+	Artifacts       []Artifact      `json:"artifacts"`
+	ExternalData    []ExternalDatum `json:"extern_data"`
+	IncludeCABundle bool            `json:"include_ca_bundle"`
 }
 
 type Artifact struct {
@@ -102,7 +103,7 @@ func GenR10eDocker(config *Config) error {
 		if err != nil {
 			return err
 		}
-		//log.Printf("Visited: %s\n", path)
+
 		if !d.IsDir() {
 			template, err := template.ParseFS(templateFs, path)
 			if err != nil {

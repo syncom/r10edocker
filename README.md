@@ -90,20 +90,22 @@ Here's an example: [config.json](./config.json)
       "src": "LICENSE",
       "dest": "/LICENSE"
     }
-  ]
+  ],
+  "include_ca_bundle": true
 }
 ```
 
 Fields "project_name", "build_cmd", and "artifacts" are mandatory. Fields
 "maintainers" and "extern_data" are optional.
 
-| Name         | Value Type | Can be null or empty |
-| :---         | :---       | :---:                |
-| project_name | string     | false                |
-| build_cmd    | string     | false                |
-| maintainers  | array of strings | true           |
-| artifacts    | array of objects | false          |
-| extern_data  | array of objects | true           |
+| Name              | Value Type | Can be null or empty |
+| :---              | :---       | :---:                |
+| project_name      | string     | false                |
+| build_cmd         | string     | false                |
+| maintainers       | array of strings | true           |
+| artifacts         | array of objects | false          |
+| extern_data       | array of objects | true           |
+| include_ca_bundle | boolean    | true                 |
 
 - "project_name" is a name to identify your project. Your reproducible container
   image will be named after it. Please make sure there's no whitespace
@@ -123,6 +125,13 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory. Fields
   container. Unlike in "artifacts", the external data path can be either a file
   or a directory. However, the source and destination paths for the same
   external datum must be of the same type (file or directory) when instantiated.
+- "include_ca_bundle" dictates a root CA bundle from the `cacert` package of
+  nixpkgs will be installed in the container image. If the value of this field
+  is set to `true` the root CA bundle will be included in the container, which
+  is useful and possibly necessary if your application uses TLS and the
+  system-wide trusted CA store; otherwise if this field is set to `false` or
+  absent from the configuration file, no root CA bundle will be installed in the
+  container.
 
 #### Generate r10e build scripts, and build
 

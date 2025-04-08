@@ -25,5 +25,6 @@
       "src": "LICENSE",
       "dest": "/LICENSE"
     }
-  ]
+  ],
+  "include_ca_bundle": true
 }
