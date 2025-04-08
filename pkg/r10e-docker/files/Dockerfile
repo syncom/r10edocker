@@ -6,8 +6,8 @@ FROM nixos/nix:2.20.1@sha256:bbd436fac4b50712fb065c3cb1d74702aa9d731cc6cc702dbba
 #########################################################
 ENV PROJECT_NAME={{.ProjectName}}
 WORKDIR "/build/${PROJECT_NAME}"
-# nixpkgs 23.11. This version has go 1.21.4
-ENV NIXPKGS_COMMIT_SHA="057f9aecfb71c4437d2b27d3323df7f93c010b7e"
+# nixpkgs 24.11. This version has go 1.23.3
+ENV NIXPKGS_COMMIT_SHA="8b27c1239e5c421a2bbc2c65d52e4a6fbf2ff296"
 
 # Apple M1 workaround
 COPY r10e-docker/nix.conf "/build/${PROJECT_NAME}/nix.conf"
@@ -32,7 +32,7 @@ COPY . "/build/${PROJECT_NAME}"
 RUN cd "/build/${PROJECT_NAME}" && \
     {{range $index, $x := .Artifacts}}mkdir -p /archive/$(dirname {{$x.Destination}}) && \
     {{end}}{{range $index, $x := .ExternalData}}mkdir -p /archive/$(dirname {{$x.Destination}}) && \
-    {{end}}nix-shell -p go_1_21 gnumake \
+    {{end}}nix-shell -p go_1_23 gnumake \
       --run "go version && \
              {{.BuildCmd}}" && \
     sha256sum {{range $index, $x := .Artifacts}}/build/${PROJECT_NAME}/{{$x.Source}} {{end}} && \
