@@ -1,0 +1,23 @@
+{
+  "project_name": "go-r10e-docker",
+  "build_cmd": "scripts/build-all.sh",
+  "artifacts": [
+    {
+      "src": "build/r10edocker-linux-amd64",
+      "dest": "/app/r10edocker-linux-amd64"
+    },
+    {
+      "src": "build/r10edocker-linux-arm64",
+      "dest": "/app/r10edocker-linux-arm64"
+    },
+    {
+      "src": "build/r10edocker-darwin-amd64",
+      "dest": "/app/r10edocker-darwin-amd64"
+    },
+    {
+      "src": "build/r10edocker-darwin-arm64",
+      "dest": "/app/r10edocker-darwin-arm64"
+    }
+  ],
+  "include_ca_bundle": false
+}

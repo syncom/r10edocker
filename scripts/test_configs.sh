@@ -27,3 +27,7 @@ make clean && \
   make r10e-build config_file="${PROJECT_DIR}/testdata/config2_with-extern-data.json" project_name="${PROJECT_NAME}" && \
   docker load -i "${PROJECT_DIR}/r10e-docker/out/${PROJECT_NAME}-latest.tar.gz"
   "${SCRIPT_DIR}/container_cp.sh" "${PROJECT_NAME}:latest" /x/y/d.txt "${TMP_FILE}"
+
+make clean && \
+  rm -rf r10e-docker && \
+  make r10e-build config_file="${PROJECT_DIR}/testdata/config3_include-ca-bundle-false.json" project_name="${PROJECT_NAME}"
