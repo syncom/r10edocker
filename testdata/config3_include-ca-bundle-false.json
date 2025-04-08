@@ -1,7 +1,6 @@
 {
   "project_name": "go-r10e-docker",
   "build_cmd": "scripts/build-all.sh",
-  "maintainers": [ "syncom" ],
   "artifacts": [
     {
       "src": "build/r10edocker-linux-amd64",
@@ -20,11 +19,5 @@
       "dest": "/app/r10edocker-darwin-arm64"
     }
   ],
-  "extern_data": [
-    {
-      "src": "LICENSE",
-      "dest": "/LICENSE"
-    }
-  ],
-  "include_ca_bundle": true
+  "include_ca_bundle": false
 }
