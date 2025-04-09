@@ -48,8 +48,8 @@ If your Go application is not reproducible, make sure you
 ### install `r10edocker`
 
 ```bash
-# commit SHA for v0.3.4. Pin commit because it's less malleable than a tag
-go install github.com/syncom/r10edocker@7bfe790b98a8205141fa0810f98e7ee159d1dedf
+# commit SHA for v0.3.5. Pin commit because it's less malleable than a tag
+go install github.com/syncom/r10edocker@12d8bbd81f1ec4eae4bc49e673f85eb6471b3ed0
 ```
 
 ### Set up your Go project for reproducible Docker builds
