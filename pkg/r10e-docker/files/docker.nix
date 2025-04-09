@@ -8,11 +8,11 @@ pkgs.dockerTools.buildImage {
   copyToRoot = pkgs.buildEnv {
     name = "{{.ProjectName}}";
     pathsToLink = [ "/" ];
-    {{if .IncludeCABundle }}
+{{if .IncludeCABundle }}
     paths = with pkgs; [cacert (import ./custom_configuration.nix {}).{{.ProjectName}}];
-    {{ else }}
+{{ else }}
     paths = with pkgs; [(import ./custom_configuration.nix {}).{{.ProjectName}}];
-    {{end}}
+{{end}}
   };
   config = {
     Cmd = [];
