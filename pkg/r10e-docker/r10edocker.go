@@ -130,7 +130,7 @@ func GenR10eDocker(config *Config) error {
 		return fmt.Errorf("unsupported Go version %s", config.GoVersion)
 	}
 
-	templateConfig := templateConfig{
+	tmpltConfig := templateConfig{
 		Config:        *config,
 		NixGoVersion:  nixPkgsCommitForGoVersion[0],
 		NixpkgsCommit: nixPkgsCommitForGoVersion[1],
@@ -157,7 +157,7 @@ func GenR10eDocker(config *Config) error {
 			if err != nil {
 				return errors.Wrapf(err, "could not create %s\n", f)
 			}
-			return template.Execute(f, templateConfig)
+			return template.Execute(f, tmpltConfig)
 		}
 		return nil
 	})
