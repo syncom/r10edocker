@@ -67,6 +67,7 @@ Here's an example: [config.json](./config.json)
   "project_name": "go-r10e-docker",
   "build_cmd": "scripts/build-all.sh",
   "maintainers": [ "syncom" ],
+  "go_version": "1.24",
   "artifacts": [
     {
       "src": "build/r10edocker-linux-amd64",
@@ -96,7 +97,8 @@ Here's an example: [config.json](./config.json)
 ```
 
 Fields "project_name", "build_cmd", and "artifacts" are mandatory. Fields
-"maintainers" and "extern_data" are optional.
+"maintainers", "extern_data", "include_ca_bundle", and "go_version" are
+optional.
 
 | Name              | Value Type | Can be null or empty |
 | :---              | :---       | :---:                |
@@ -106,6 +108,7 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory. Fields
 | artifacts         | array of objects | false          |
 | extern_data       | array of objects | true           |
 | include_ca_bundle | boolean    | true                 |
+| go_version        | string     | true                 |
 
 - "project_name" is a name to identify your project. Your reproducible container
   image will be named after it. Please make sure there's no whitespace
@@ -132,6 +135,12 @@ Fields "project_name", "build_cmd", and "artifacts" are mandatory. Fields
   system-wide trusted CA store; otherwise if this field is set to `false` or
   absent from the configuration file, no root CA bundle will be installed in the
   container.
+- "go_version" specifies the desired golang version in `<major>.<minor>` format
+  (e.g., `1.24`) to use to build the application. We only support Go version
+  `1.19` and later. Please refer to
+  [nixpkgs_go_versions.go](./pkg/r10e-docker/nixpkgs_go_versions.go) for
+  supported Go versions. If this field is missing from the configuration, a
+  default Go version (also specified in `nixpkgs_go_versions.go`) will be used.
 
 #### Generate r10e build scripts, and build
 
