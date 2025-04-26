@@ -105,10 +105,10 @@ optional.
 | project_name      | string     | false                |
 | build_cmd         | string     | false                |
 | maintainers       | array of strings | true           |
+| go_version        | string     | true                 |
 | artifacts         | array of objects | false          |
 | extern_data       | array of objects | true           |
 | include_ca_bundle | boolean    | true                 |
-| go_version        | string     | true                 |
 
 - "project_name" is a name to identify your project. Your reproducible container
   image will be named after it. Please make sure there's no whitespace
