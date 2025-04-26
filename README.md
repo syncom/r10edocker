@@ -48,8 +48,8 @@ If your Go application is not reproducible, make sure you
 ### install `r10edocker`
 
 ```bash
-# commit SHA for v0.3.5. Pin commit because it's less malleable than a tag
-go install github.com/syncom/r10edocker@12d8bbd81f1ec4eae4bc49e673f85eb6471b3ed0
+# commit SHA for v0.3.6. Pin commit because it's less malleable than a tag
+go install github.com/syncom/r10edocker@6e88e3d2700d99df77d82164342952d056f6a7e7
 ```
 
 ### Set up your Go project for reproducible Docker builds
@@ -105,10 +105,10 @@ optional.
 | project_name      | string     | false                |
 | build_cmd         | string     | false                |
 | maintainers       | array of strings | true           |
+| go_version        | string     | true                 |
 | artifacts         | array of objects | false          |
 | extern_data       | array of objects | true           |
 | include_ca_bundle | boolean    | true                 |
-| go_version        | string     | true                 |
 
 - "project_name" is a name to identify your project. Your reproducible container
   image will be named after it. Please make sure there's no whitespace
