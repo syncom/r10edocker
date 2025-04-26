@@ -123,6 +123,13 @@ optional.
     Docker container image
 - "maintainer" contains a list of project maintainer
   names/aliases/GitHub handles
+- "go_version" specifies the desired golang version in `<major>.<minor>` format
+  (e.g., `1.24`) to use to build the application. The value of `go_version`
+  shall not be smaller than the `go` version specified in your `go.mod` file. We
+  only support Go version `1.19` and later. Please refer to
+  [nixpkgs_go_versions.go](./pkg/r10e-docker/nixpkgs_go_versions.go) for
+  supported Go versions. If this field is missing from the configuration, a
+  default Go version (also specified in `nixpkgs_go_versions.go`) will be used.
 - "extern_data" contains information about the source and destination path
   information for data external to the Go executable(s) to get into the
   container. Unlike in "artifacts", the external data path can be either a file
@@ -135,13 +142,6 @@ optional.
   system-wide trusted CA store; otherwise if this field is set to `false` or
   absent from the configuration file, no root CA bundle will be installed in the
   container.
-- "go_version" specifies the desired golang version in `<major>.<minor>` format
-  (e.g., `1.24`) to use to build the application. The value of `go_version`
-  shall not be smaller than the `go` version specified in your `go.mod` file. We
-  only support Go version `1.19` and later. Please refer to
-  [nixpkgs_go_versions.go](./pkg/r10e-docker/nixpkgs_go_versions.go) for
-  supported Go versions. If this field is missing from the configuration, a
-  default Go version (also specified in `nixpkgs_go_versions.go`) will be used.
 
 #### Generate r10e build scripts, and build
 
