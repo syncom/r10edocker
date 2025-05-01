@@ -135,6 +135,9 @@ optional.
   container. Unlike in "artifacts", the external data path can be either a file
   or a directory. However, the source and destination paths for the same
   external datum must be of the same type (file or directory) when instantiated.
+  - "src" shall be a *relative path* to the project diectory where `r10edocker`
+    is run
+  - "dest" shall be an *absolut path* in the final Docker container image
 - "include_ca_bundle" dictates a root CA bundle from the `cacert` package of
   nixpkgs will be installed in the container image. If the value of this field
   is set to `true` the root CA bundle will be included in the container, which
