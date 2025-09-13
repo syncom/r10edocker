@@ -14,6 +14,7 @@ var NixpkgsCommitForGoVersion = map[string][3]string{
 	"1.22": {"1_22", "336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3", "2024-02-24"},
 	"1.23": {"1_23", "f0eaec3bf29b96bf6f801cc602ed6827a9fa53ec", "2024-08-27"},
 	"1.24": {"1_24", "2a875b68adee59464634ce6e3240f95f990091e5", "2025-04-22"},
+	"1.25": {"1_25", "e84ec1a23cdb2494ca871eebc0edf34a00c351da", "2025-09-07"},
 }
 
-var DefaultGoVersion = "1.24"
+var DefaultGoVersion = "1.25"
