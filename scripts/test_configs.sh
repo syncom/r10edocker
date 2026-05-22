@@ -33,7 +33,7 @@ make clean && \
   make r10e-build config_file="${PROJECT_DIR}/testdata/config3_include-ca-bundle-false.json" project_name="${PROJECT_NAME}"
 
 # Test go_version
-supported_go_versions=("1.21" "1.22" "1.23" "1.24" "1.25")
+supported_go_versions=("1.21" "1.22" "1.23" "1.24" "1.25" "1.26")
 for go_version in "${supported_go_versions[@]}"; do
     make clean && \
     rm -rf r10e-docker && \
