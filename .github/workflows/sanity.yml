@@ -23,7 +23,8 @@ jobs:
           go-version: ${{ matrix.go-version }}
           cache: false
       - name: "checkout code"
-        uses: actions/checkout@v4.2.2
+        # v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
         with:
           # Fetch all history for all tags and branches
           fetch-depth: 0
@@ -105,7 +106,8 @@ jobs:
           go-version: ${{ matrix.go-version }}
           cache: false
       - name: "checkout code"
-        uses: actions/checkout@v4.2.2
+        # v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - name: "test JSON config files"
         run: |
           set -euxo pipefail
@@ -127,7 +129,8 @@ jobs:
           go-version: ${{ matrix.go-version }}
           cache: false
       - name: "Checkout repository"
-        uses: actions/checkout@v4.2.2
+        # v6.0.2
+        uses: actions/checkout@de0fac2e4500dabe0009e67214ff5f5447ce83dd
       - if: ${{ matrix.os == 'ubuntu-latest' }}
         name: Install shellcheck on Ubuntu
         run: |
