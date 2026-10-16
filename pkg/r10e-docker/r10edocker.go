@@ -145,7 +145,7 @@ func GenR10eDocker(config *Config) error {
 		if !d.IsDir() {
 			template, err := template.ParseFS(templateFs, path)
 			if err != nil {
-				return errors.Wrapf(err, "could not parse %s\n", path)
+				return errors.Wrapf(err, "could not parse %s", path)
 			}
 			fpath := filepath.Join(r10eDockerDir, strings.TrimPrefix(path, "files/"))
 			dPath := filepath.Dir(fpath)
@@ -155,8 +155,10 @@ func GenR10eDocker(config *Config) error {
 
 			f, err := os.Create(fpath)
 			if err != nil {
-				return errors.Wrapf(err, "could not create %s\n", f)
+				return errors.Wrapf(err, "could not create %s", fpath)
 			}
+			defer f.Close()
+
 			return template.Execute(f, tmpltConfig)
 		}
 		return nil
