@@ -3,6 +3,19 @@ package r10edocker
 // This file is manually generated.
 // It contains the mapping of Go versions to Nixpkgs commits.
 // Source: https://lazamar.co.uk/nix-versions/?channel=nixpkgs-unstable&package=go
+//
+// Each entry maps a Go minor version to
+// {nixpkgs go attribute suffix, nixpkgs commit SHA, commit date}.
+// The attribute suffix names the package as go_<suffix> in the pinned nixpkgs;
+// the commit SHA is what pins the build and is the only field builds depend on.
+//
+// The commit date is the committer date of that SHA, in UTC, as YYYY-MM-DD.
+// It documents the pin and is never the date the entry was added. Note that
+// lazamar renders these dates in the viewer's local timezone, so a commit made
+// late in the UTC day may display there as the previous day. Take the date from
+// the commit itself:
+//
+//	TZ=UTC git show -s --date=format-local:%Y-%m-%d --format=%cd <sha>
 var NixpkgsCommitForGoVersion = map[string][3]string{
 	// Go v1.16 is the first version to support the `embed` package.
 	// The nixpkgs commit for Go v1.19 supports the 'copyToRoot' feature of the
@@ -14,8 +27,9 @@ var NixpkgsCommitForGoVersion = map[string][3]string{
 	"1.22": {"1_22", "336eda0d07dc5e2be1f923990ad9fdb6bc8e28e3", "2024-02-24"},
 	"1.23": {"1_23", "f0eaec3bf29b96bf6f801cc602ed6827a9fa53ec", "2024-08-27"},
 	"1.24": {"1_24", "2a875b68adee59464634ce6e3240f95f990091e5", "2025-04-22"},
-	"1.25": {"1_25", "e84ec1a23cdb2494ca871eebc0edf34a00c351da", "2025-09-07"},
+	"1.25": {"1_25", "e84ec1a23cdb2494ca871eebc0edf34a00c351da", "2025-09-08"},
 	"1.26": {"1_26", "d233902339c02a9c334e7e593de68855ad26c4cb", "2026-05-15"},
+	"1.27": {"1_27", "f20cd90e28fe0403873f473b29e42662cd86e8c4", "2026-10-16"},
 }
 
-var DefaultGoVersion = "1.26"
+var DefaultGoVersion = "1.27"
